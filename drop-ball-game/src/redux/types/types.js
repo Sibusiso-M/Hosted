@@ -1,0 +1,5 @@
+export const types = {
+  START_GAME: "START_GAME",
+  BALL_DROP: "BALL_DROP",
+  MANAGE_GAME_FLOORS: "MANAGE_GAME_FLOORS",
+};

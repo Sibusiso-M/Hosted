@@ -3,6 +3,12 @@
 React and Redux recipe search: Part 1. Presenting the form (532)
 For raw project instructions see: <http://syllabus.africacode.net/projects/recipe-search/part-1/>
 
+## API
+<hosted-production.up.railway.app>
+PORT: 5000
+
+- schema coming soon.
+
 ## My Chosen File Naming Convention
 
 - File Name-Based Component Grouping.

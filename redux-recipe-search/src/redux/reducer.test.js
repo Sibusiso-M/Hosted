@@ -176,32 +176,4 @@ describe("reducer", () => {
     newState = reducer(newState, action);
     expect(newState.alphabeticalIngredientError).toBeFalsy();
   });
-
-  it("should handle setApiKeyExists", () => {
-    initialStateMock = {
-      ...initialStateMock,
-      apiKeyExists: false,
-    };
-    let action = recipeSearchActions.setApiKeyExists(true);
-    let newState = reducer(initialStateMock, action);
-    expect(newState.apiKeyExists).toBeTruthy();
-
-    action = recipeSearchActions.setApiKeyExists(false);
-    newState = reducer(newState, action);
-    expect(newState.apiKeyExists).toBeFalsy();
-  });
-
-  it("should handle setAppIdExists", () => {
-    initialStateMock = {
-      ...initialStateMock,
-      appIdExists: false,
-    };
-    let action = recipeSearchActions.setAppIdExists(true);
-    let newState = reducer(initialStateMock, action);
-    expect(newState.appIdExists).toBeTruthy();
-
-    action = recipeSearchActions.setAppIdExists(false);
-    newState = reducer(newState, action);
-    expect(newState.appIdExists).toBeFalsy();
-  });
 });

@@ -1,14 +1,15 @@
 import { recipeSearchActions } from "../actions";
 
-export const fetchRecipeThunk = (url) => async (dispatch) => {
+export const fetchRecipeThunk = (url, body) => async (dispatch) => {
   try {
-    const response = await fetch(url);
-    const data = await response.json();
-
-    const recipes = data.hits.map(({ recipe }) => {
-      const { image, ingredientLines, label } = recipe;
-      return { image, ingredientLines, label };
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
     });
+    const recipes = await response.json();
 
     if (recipes.length === 0)
       dispatch(recipeSearchActions.setEmptyRecipeResponseError(true));

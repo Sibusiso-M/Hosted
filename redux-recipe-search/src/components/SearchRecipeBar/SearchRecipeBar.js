@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React from "react";
 import {
   FormControl,
   IconButton,
@@ -12,21 +12,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { recipeSearchActions } from "../../redux/actions.js";
 import { fetchRecipeThunk } from "../../redux/thunk/searchRecipeThunk.js";
-import { configurationVariables } from "../../configurationVariables.js";
-import {
-  checkApiKeyExists,
-  checkAppIdExists,
-  validateAlphabeticInput,
-} from "../../utilities/helperFunction.js";
+import { validateAlphabeticInput } from "../../utilities/helperFunction.js";
 import SearchKeywordFeedback from "./SearchKeywordFeedback.js";
-
-const { apiKey, appId } = configurationVariables;
 
 export default function SearchRecipeBar() {
   const searchKeyword = useSelector((state) => state.searchKeyword);
   const searchKeywordEmpty = useSelector((state) => state.searchKeywordEmpty);
-  const apiKeyExists = useSelector((state) => state.apiKeyExists);
-  const appIdExists = useSelector((state) => state.appIdExists);
   const ingredientExists = useSelector((state) => state.ingredientExists);
   const ingredients = useSelector((state) => state.ingredients);
   const ingredientLengthValid = useSelector(
@@ -43,24 +34,6 @@ export default function SearchRecipeBar() {
   );
 
   const dispatch = useDispatch();
-
-  const updateConfigState = useCallback(() => {
-    if (checkAppIdExists(appId)) {
-      dispatch(recipeSearchActions.setAppIdExists(true));
-    } else if (!checkAppIdExists(appId)) {
-      dispatch(recipeSearchActions.setAppIdExists(false));
-    }
-
-    if (checkApiKeyExists(apiKey)) {
-      dispatch(recipeSearchActions.setApiKeyExists(true));
-    } else if (checkApiKeyExists(apiKey)) {
-      dispatch(recipeSearchActions.setApiKeyExists(false));
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
-    updateConfigState();
-  }, [updateConfigState]);
 
   const handleKeywordChange = (event) => {
     if (ingredientExists || ingredientLengthValid || !ingredientInputEmpty) {
@@ -89,14 +62,13 @@ export default function SearchRecipeBar() {
       dispatch(recipeSearchActions.setAlphabeticalKeywordError(true));
       return;
     }
-    if (appIdExists && apiKeyExists) {
-      const url = `https://api.edamam.com/api/recipes/v2?q=${searchKeyword} ${ingredients.join(
-        " "
-      )}&app_id=${appId}&app_key=${apiKey}&type=public`;
 
-      dispatch(recipeSearchActions.setIsLoading(true));
-      dispatch(fetchRecipeThunk(url));
-    }
+    const apiUrl = process.env.REACT_APP_API_URL;
+
+    const body = { searchKeyword, ingredients };
+
+    dispatch(recipeSearchActions.setIsLoading(true));
+    dispatch(fetchRecipeThunk(apiUrl, body));
   };
 
   const handleEnterKeyDown = async (event) => {

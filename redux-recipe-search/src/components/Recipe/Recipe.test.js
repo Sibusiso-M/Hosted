@@ -90,56 +90,6 @@ describe("Recipe component", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("should show error when apiKey is missing", () => {
-    initialStateMock = {
-      ...initialStateMock,
-      apiKeyExists: false,
-      appIdExists: true,
-      searchKeyword: "mockRecipe",
-    };
-    appStore = createStoreTest(initialStateMock);
-
-    renderApp(appStore);
-    expect(screen.getByText(/api key is missing\./i)).toBeInTheDocument();
-  });
-
-  it("should not show an error when apiKey is defined", () => {
-    initialStateMock = {
-      ...initialStateMock,
-      apiKeyExists: true,
-      appIdExists: false,
-      searchKeyword: "mockRecipe",
-    };
-
-    appStore = createStoreTest(initialStateMock);
-    renderApp(appStore);
-    expect(screen.queryByText(/api key is missing\./i)).not.toBeInTheDocument();
-  });
-
-  it("should show error when app id is missing", () => {
-    initialStateMock = {
-      ...initialStateMock,
-      apiKeyExists: true,
-      appIdExists: false,
-    };
-    appStore = createStoreTest(initialStateMock);
-
-    renderApp(appStore);
-    expect(screen.getByText(/app id is missing\./i)).toBeInTheDocument();
-  });
-
-  it("should not show an error when appId is defined", () => {
-    initialStateMock = {
-      ...initialStateMock,
-      apiKeyExists: true,
-      appIdExists: true,
-    };
-    appStore = createStoreTest(initialStateMock);
-
-    renderApp(appStore);
-    expect(screen.queryByText(/app id is missing\./i)).not.toBeInTheDocument();
-  });
-
   it("should show an error when fetch request throws an error", () => {
     initialStateMock = {
       ...initialStateMock,

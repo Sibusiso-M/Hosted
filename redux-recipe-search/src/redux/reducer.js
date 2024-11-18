@@ -12,8 +12,6 @@ export const initialState = {
   recipes: [],
   isLoading: false,
   recipeResponseEmpty: false,
-  appIdExists: false,
-  apiKeyExists: false,
   alphabeticalKeywordError: false,
   alphabeticalIngredientError: false,
   fetchResponseErrorMessage: null,
@@ -90,18 +88,6 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         recipeResponseEmpty: action.payload,
-      };
-
-    case types.SET_API_KEY_EXISTENCE:
-      return {
-        ...state,
-        apiKeyExists: action.payload,
-      };
-
-    case types.SET_APP_ID_EXISTENCE:
-      return {
-        ...state,
-        appIdExists: action.payload,
       };
 
     case types.SET_ALPHABET_KEYWORD_INPUT_ERROR:

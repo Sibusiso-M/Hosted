@@ -64,13 +64,6 @@ const updateState = (
   };
 };
 
-export const checkAppIdExists = (appId) => {
-  return appId !== undefined;
-};
-export const checkApiKeyExists = (apiKey) => {
-  return apiKey !== undefined;
-};
-
 export const validateAlphabeticInput = (inputValue) => {
   const alphabeticRegex = /^[A-Za-z\s]+$/;
   return alphabeticRegex.test(inputValue);

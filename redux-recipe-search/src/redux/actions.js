@@ -55,16 +55,6 @@ export const recipeSearchActions = {
     payload: ingredientToAdd,
   }),
 
-  setApiKeyExists: (status) => ({
-    type: types.SET_API_KEY_EXISTENCE,
-    payload: status,
-  }),
-
-  setAppIdExists: (status) => ({
-    type: types.SET_APP_ID_EXISTENCE,
-    payload: status,
-  }),
-
   setAlphabeticalKeywordError: (keyword) => ({
     type: types.SET_ALPHABET_KEYWORD_INPUT_ERROR,
     payload: keyword,

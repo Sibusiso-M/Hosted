@@ -12,21 +12,8 @@ This approach involves creating a folder for each component and placing both the
 
 1. Create a .env File:
 In the root directory of your React application, create a new file named .env. This file will be used to store your environment variables.
-2. Add Environment Variables:
 
-Inside the .env file, define the environment variables you want to use for your config object.:
-`
-REACT_APP_APP_ID=your_app_id_here
-REACT_APP_API_KEY=your_api_key_here`
-3. Accessing Environment Variables:
-
-In your JavaScript code, you can access these environment variables using process.env.REACT_APP_VARIABLE_NAME.:
-
-`export const config = {
-  appId: process.env.REACT_APP_APP_ID,
-  apiKey: process.env.REACT_APP_API_KEY,
-};`
-4. Restart Your Development Server:
+2. Restart Your Development Server:
 
 After adding the environment variables to the .env file, you may need to restart your development server (e.g., using npm start) for the changes to take effect.
 5. Gitignore the .env File:

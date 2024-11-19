@@ -12,15 +12,6 @@ dotenv.config({ path: envFile });
 const app = express();
 
 const isProduction = process.env.NODE_ENV === "production";
-console.log("envFile:", envFile);
-console.log("CORS_ALLOWED_ORIGINS:", process.env);
-console.log("CORS_ALLOWED_ORIGINS:", process.env.CORS_ALLOWED_ORIGINS);
-console.log("Environment Variables Loaded:", {
-  EDAMAM_APP_ID: process.env.EDAMAM_APP_ID,
-  EDAMAM_APP_KEY: process.env.EDAMAM_APP_KEY,
-  CORS_ALLOWED_ORIGINS: process.env.CORS_ALLOWED_ORIGINS,
-});
-console.log("process.env keys:", Object.keys(process.env));
 
 const corsOptions = {
   origin: isProduction

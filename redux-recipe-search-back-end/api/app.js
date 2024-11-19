@@ -20,6 +20,8 @@ console.log("Environment Variables Loaded:", {
   EDAMAM_APP_KEY: process.env.EDAMAM_APP_KEY,
   CORS_ALLOWED_ORIGINS: process.env.CORS_ALLOWED_ORIGINS,
 });
+console.log("process.env keys:", Object.keys(process.env));
+
 const corsOptions = {
   origin: isProduction
     ? process.env.CORS_ALLOWED_ORIGINS.split(",") // Restrict in production

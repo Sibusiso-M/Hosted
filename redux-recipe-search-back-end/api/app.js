@@ -77,9 +77,13 @@ app.post("/recipes", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
+if (!isProduction) {
+  const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV}`);
-});
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Environment: ${process.env.NODE_ENV}`);
+  });
+} else {
+  //show nothing in production environment.
+}

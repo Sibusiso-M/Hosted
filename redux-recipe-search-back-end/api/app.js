@@ -12,6 +12,7 @@ dotenv.config({ path: envFile });
 const app = express();
 
 const isProduction = process.env.NODE_ENV === "production";
+console.log("CORS_ALLOWED_ORIGINS:", process.env.CORS_ALLOWED_ORIGINS);
 
 const corsOptions = {
   origin: isProduction

@@ -5,7 +5,7 @@
   "homepage": "./build/index.html",
   "scripts": {
     "start": "react-scripts start",
-    "build": "cross-env REACT_APP_API_URL=/ react-scripts build",
+    "build:prod": "cross-env PUBLIC_URL=https://main.dya1u2qj9u5i3.amplifyapp.com react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

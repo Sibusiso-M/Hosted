@@ -2,7 +2,7 @@ import { recipeSearchActions } from "../actions";
 
 export const fetchRecipeThunk = (url, body) => async (dispatch) => {
   try {
-    const response = await fetch(`/${url}/recipes`, {
+    const response = await fetch(`${url}/recipes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

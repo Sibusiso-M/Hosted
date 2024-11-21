@@ -4,15 +4,17 @@ const axios = require("axios");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 
+// Load environment variables
 const envFile =
   process.env.NODE_ENV === "production"
     ? ".env.production"
     : ".env.development";
 dotenv.config({ path: envFile });
-const app = express();
 
+const app = express();
 const isProduction = process.env.NODE_ENV === "production";
 
+// Configure CORS
 const corsOptions = {
   origin: (origin, callback) => {
     if (isProduction) {
@@ -31,17 +33,12 @@ const corsOptions = {
   allowedHeaders: "Content-Type,Authorization",
 };
 
-if (process.env.NODE_ENV === "development") {
-  app.use(morgan("dev"));
+if (!isProduction) {
+  app.use(morgan("dev")); // Log requests in development
 }
 app.use(express.json());
-//#Why POST method
-//The client sends a JSON payload with the search parameters, and your server handles the logic transparently.
-//Future additions (e.g., pagination, user preferences) can be handled within the request body without overloading the URL structure.
-
 app.use(cors(corsOptions));
-
-app.options("*", cors(corsOptions)); // Handles preflight for all routes
+app.options("*", cors(corsOptions)); // Handle preflight requests
 
 app.post("/recipes", async (req, res) => {
   const { searchKeyword, ingredients } = req.body;

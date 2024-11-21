@@ -18,6 +18,8 @@ const corsOptions = {
     ? process.env.CORS_ALLOWED_ORIGINS.split(",") // Restrict in production
     : "*", // Allow all origins in development
   credentials: true, // Allow cookies/auth headers
+  methods: "HEAD,POST,OPTIONS",
+  allowedHeaders: "Content-Type, Authorization",
 };
 
 if (process.env.NODE_ENV === "development") {

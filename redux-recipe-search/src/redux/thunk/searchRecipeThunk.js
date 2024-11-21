@@ -7,7 +7,9 @@ export const fetchRecipeThunk = (url, body) => async (dispatch) => {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "https://hosted-production.up.railway.app"
+        "Access-Control-Allow-Origin":
+          "https://hosted-production.up.railway.app",
+        origin: "https://main.dya1u2qj9u5i3.amplifyapp.com",
       },
       body: JSON.stringify(body),
     });

@@ -14,10 +14,21 @@ const app = express();
 const isProduction = process.env.NODE_ENV === "production";
 
 const corsOptions = {
-  origin: isProduction
-    ? process.env.CORS_ALLOWED_ORIGINS.split(",") // Restrict in production
-    : "*", // Allow all origins in development
-  credentials: true, // Allow cookies/auth headers
+  origin: (origin, callback) => {
+    if (isProduction) {
+      const allowedOrigins = process.env.CORS_ALLOWED_ORIGINS.split(",");
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    } else {
+      callback(null, true); // Allow all origins in development
+    }
+  },
+  credentials: true,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+  allowedHeaders: "Content-Type,Authorization",
 };
 
 if (process.env.NODE_ENV === "development") {

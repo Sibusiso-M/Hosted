@@ -6,6 +6,7 @@ export const fetchRecipeThunk = (url, body) => async (dispatch) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "https://hosted-production.up.railway.app"
       },
       body: JSON.stringify(body),
     });

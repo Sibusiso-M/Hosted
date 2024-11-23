@@ -42,7 +42,7 @@ app.use(cors(corsOptions));
 app.options("*", cors(corsOptions)); // Handle preflight requests
 
 console.log('CORS_ALLOWED_ORIGINS', process.env.CORS_ALLOWED_ORIGINS);
-console.log('appId',process.env.appId, process.env.appKey);
+console.log('process.env:',process.env);
 
 app.post("/recipes", async (req, res) => {
   const { searchKeyword, ingredients } = req.body;

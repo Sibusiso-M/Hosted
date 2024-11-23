@@ -3,7 +3,10 @@ const cors = require("cors");
 const axios = require("axios");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
-
+app.use((req, res, next) => {
+  console.log(`Incoming request: ${req.method} ${req.path}`);
+  next();
+});
 // Load environment variables
 const envFile =
   process.env.NODE_ENV === "production"
@@ -31,7 +34,6 @@ const corsOptions = {
   credentials: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
   allowedHeaders: "Content-Type,Authorization",
-  optionsSuccessStatus: 200
 };
 
 if (!isProduction) {
@@ -41,11 +43,11 @@ app.use(express.json());
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions)); // Handle preflight requests
 
-console.log('CORS_ALLOWED_ORIGINS', process.env.CORS_ALLOWED_ORIGINS);
-console.log('EDAMAM_APP_ID', process.env.EDAMAM_APP_ID);
-console.log('EDAMAM_APP_KEY', process.env.EDAMAM_APP_KEY);
-
 app.post("/recipes", async (req, res) => {
+  app.use((req, res, next) => {
+    console.log(`Incoming request: ${req.method} ${req.path}`);
+    next();
+  });
   const { searchKeyword, ingredients } = req.body;
   const envFile =
     process.env.NODE_ENV === "production"

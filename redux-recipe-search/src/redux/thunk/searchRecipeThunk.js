@@ -3,14 +3,9 @@ import { recipeSearchActions } from "../actions";
 export const fetchRecipeThunk = (url, body) => async (dispatch) => {
   try {
     const response = await fetch(`${url}/recipes`, {
-      proxy: process.env.CORS_ALLOWED_ORIGINS,
       method: "POST",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin":
-          "https://hosted-production.up.railway.app",
-        origin: "https://main.dya1u2qj9u5i3.amplifyapp.com",
       },
       body: JSON.stringify(body),
     });

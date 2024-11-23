@@ -3,6 +3,7 @@ import { recipeSearchActions } from "../actions";
 export const fetchRecipeThunk = (url, body) => async (dispatch) => {
   try {
     const response = await fetch(`${url}/recipes`, {
+      proxy: process.env.CORS_ALLOWED_ORIGINS,
       method: "POST",
       credentials: "include",
       headers: {

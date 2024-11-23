@@ -42,7 +42,8 @@ app.use(cors(corsOptions));
 app.options("*", cors(corsOptions)); // Handle preflight requests
 
 console.log('CORS_ALLOWED_ORIGINS', process.env.CORS_ALLOWED_ORIGINS);
-console.log('process.env:',process.env);
+console.log('EDAMAM_APP_ID', process.env.EDAMAM_APP_ID);
+console.log('EDAMAM_APP_KEY', process.env.EDAMAM_APP_KEY);
 
 app.post("/recipes", async (req, res) => {
   const { searchKeyword, ingredients } = req.body;

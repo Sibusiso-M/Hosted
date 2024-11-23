@@ -96,4 +96,8 @@ if (!isProduction) {
   });
 } else {
   //show nothing in production environment.
+  const PORT = process.env.PORT || 3000; // Fallback to 3000 for local dev
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 }

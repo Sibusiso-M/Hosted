@@ -96,8 +96,9 @@ if (!isProduction) {
   });
 } else {
   //show nothing in production environment.
-  const PORT = process.env.PORT || 3000; // Fallback to 3000 for local dev
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running on port ${PORT}`);
+  const server = app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on http://0.0.0.0:${PORT}`);
   });
+  
+  server.timeout = 10000; // Increase to 10 seconds
 }

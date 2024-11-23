@@ -12,11 +12,6 @@ dotenv.config({ path: envFile });
 
 const app = express();
 const isProduction = process.env.NODE_ENV === "production";
-app.use((req, res, next) => {
-  console.log(`Incoming request: ${req.method} ${req.path}`);
-  next();
-});
-// Load environment variables
 // Configure CORS
 const corsOptions = {
   origin: (origin, callback) => {

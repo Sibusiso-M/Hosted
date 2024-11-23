@@ -90,7 +90,8 @@ if (!isProduction) {
     console.log(`Environment: ${process.env.NODE_ENV}`);
   });
 } else {
-  //show nothing in production environment.
+  const PORT = process.env.PORT || 8080;
+
   const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running on http://0.0.0.0:${PORT}`);
   });

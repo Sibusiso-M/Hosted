@@ -3,11 +3,7 @@ const cors = require("cors");
 const axios = require("axios");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
-app.use((req, res, next) => {
-  console.log(`Incoming request: ${req.method} ${req.path}`);
-  next();
-});
-// Load environment variables
+
 const envFile =
   process.env.NODE_ENV === "production"
     ? ".env.production"
@@ -16,7 +12,11 @@ dotenv.config({ path: envFile });
 
 const app = express();
 const isProduction = process.env.NODE_ENV === "production";
-
+app.use((req, res, next) => {
+  console.log(`Incoming request: ${req.method} ${req.path}`);
+  next();
+});
+// Load environment variables
 // Configure CORS
 const corsOptions = {
   origin: (origin, callback) => {
@@ -31,7 +31,6 @@ const corsOptions = {
       callback(null, true); // Allow all origins in development
     }
   },
-  credentials: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
   allowedHeaders: "Content-Type,Authorization",
 };
@@ -44,10 +43,6 @@ app.use(cors(corsOptions));
 app.options("*", cors(corsOptions)); // Handle preflight requests
 
 app.post("/recipes", async (req, res) => {
-  app.use((req, res, next) => {
-    console.log(`Incoming request: ${req.method} ${req.path}`);
-    next();
-  });
   const { searchKeyword, ingredients } = req.body;
   const envFile =
     process.env.NODE_ENV === "production"

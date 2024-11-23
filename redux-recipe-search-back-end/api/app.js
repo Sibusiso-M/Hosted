@@ -12,11 +12,6 @@ dotenv.config({ path: envFile });
 
 const app = express();
 const isProduction = process.env.NODE_ENV === "production";
-app.use((req, res, next) => {
-  console.log(`Incoming request: ${req.method} ${req.path}`);
-  next();
-});
-// Load environment variables
 // Configure CORS
 const corsOptions = {
   origin: (origin, callback) => {
@@ -95,7 +90,8 @@ if (!isProduction) {
     console.log(`Environment: ${process.env.NODE_ENV}`);
   });
 } else {
-  //show nothing in production environment.
+  const PORT = process.env.PORT || 8080;
+
   const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running on http://0.0.0.0:${PORT}`);
   });

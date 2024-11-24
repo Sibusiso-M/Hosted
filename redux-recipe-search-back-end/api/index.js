@@ -37,6 +37,10 @@ app.use(express.json());
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions)); // Handle preflight requests
 
+app.get("/", async (req, res) => {
+  res.status(200).json('Express on vercel')
+});
+
 app.post("/recipes", async (req, res) => {
   const { searchKeyword, ingredients } = req.body;
   const envFile =

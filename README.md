@@ -6,7 +6,7 @@ A repo of all my hosted (live) websites
 
 ## Redux Recipe Search
 > https://main.dya1u2qj9u5i3.amplifyapp.com/
-> API: <hosted-production.up.railway.app>
-> PORT: 5000
+> API: <[hosted-production.up.railway.app](https://hosted-psi.vercel.app)>
+> PORT: 8080
 
 - schema coming soon.

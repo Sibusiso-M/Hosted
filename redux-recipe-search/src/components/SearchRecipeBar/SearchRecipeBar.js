@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import {
   FormControl,
   IconButton,
@@ -14,8 +14,10 @@ import { recipeSearchActions } from "../../redux/actions.js";
 import { fetchRecipeThunk } from "../../redux/thunk/searchRecipeThunk.js";
 import { validateAlphabeticInput } from "../../utilities/helperFunction.js";
 import SearchKeywordFeedback from "./SearchKeywordFeedback.js";
+import debounce from "lodash/debounce";
 
 export default function SearchRecipeBar() {
+  const dispatch = useDispatch();
   const searchKeyword = useSelector((state) => state.searchKeyword);
   const searchKeywordEmpty = useSelector((state) => state.searchKeywordEmpty);
   const ingredientExists = useSelector((state) => state.ingredientExists);
@@ -32,8 +34,6 @@ export default function SearchRecipeBar() {
   const alphabeticalIngredientError = useSelector(
     (state) => state.alphabeticalIngredientError
   );
-
-  const dispatch = useDispatch();
 
   const handleKeywordChange = (event) => {
     if (ingredientExists || ingredientLengthValid || !ingredientInputEmpty) {
@@ -53,6 +53,22 @@ export default function SearchRecipeBar() {
       dispatch(recipeSearchActions.setAlphabeticalIngredientError(false));
   };
 
+  const debouncedSearch = useMemo(
+    () =>
+      debounce(async (keyword, ingredients) => {
+        const apiUrl = process.env.REACT_APP_API_URL;
+        const body = { searchKeyword: keyword, ingredients };
+
+        dispatch(recipeSearchActions.setIsLoading(true));
+        dispatch(fetchRecipeThunk(apiUrl, body));
+      }, 1500),
+    [dispatch]
+  );
+
+  useEffect(() => {
+    return () => debouncedSearch.cancel();
+  }, [debouncedSearch]);
+
   const handleSearchButton = () => {
     dispatch(recipeSearchActions.clearRecipes());
     if (searchKeyword.trim().length < 1) {
@@ -62,13 +78,7 @@ export default function SearchRecipeBar() {
       dispatch(recipeSearchActions.setAlphabeticalKeywordError(true));
       return;
     }
-
-    const apiUrl = process.env.REACT_APP_API_URL;
-
-    const body = { searchKeyword, ingredients };
-
-    dispatch(recipeSearchActions.setIsLoading(true));
-    dispatch(fetchRecipeThunk(apiUrl, body));
+    debouncedSearch(searchKeyword, ingredients);
   };
 
   const handleEnterKeyDown = async (event) => {

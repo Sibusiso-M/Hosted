@@ -12,11 +12,14 @@ const limiter = rateLimit({
     "Too many API requests from this IP, please try again in 15 minutes.",
 });
 
-const envFile =
-  process.env.NODE_ENV === "production"
-    ? ".env.production"
-    : ".env.development";
-dotenv.config({ path: envFile });
+if (!process.env.VERCEL) {
+  require("dotenv").config({
+    path:
+      process.env.NODE_ENV === "production"
+        ? ".env.production"
+        : ".env.development",
+  });
+}
 
 const app = express();
 app.use(limiter);

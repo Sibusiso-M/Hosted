@@ -25,7 +25,3 @@ yarn-error.log*
 # recipe-search
 .env
 .vscode
-# Ignore all .env files
-.env
-.env.development
-.env.production

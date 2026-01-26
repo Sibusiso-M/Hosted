@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
 
+
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 20,
@@ -22,6 +23,8 @@ if (!process.env.VERCEL) {
 }
 
 const app = express();
+app.set('trust proxy', 1);
+
 app.use(limiter);
 const isProduction = process.env.NODE_ENV === "production";
 // Configure CORS

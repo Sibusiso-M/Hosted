@@ -5,8 +5,6 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
 
-app.set('trust proxy', 1);
-
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 20,

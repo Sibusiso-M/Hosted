@@ -24,6 +24,8 @@ if (!process.env.VERCEL) {
 }
 
 const app = express();
+app.set('trust proxy', 1);
+
 app.use(limiter);
 const isProduction = process.env.NODE_ENV === "production";
 // Configure CORS

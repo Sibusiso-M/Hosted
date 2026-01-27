@@ -36,19 +36,23 @@ const allowedCorsOrigins =
     ?.split(",")
     .map(origin => origin.trim()) ?? [];
 
-const corsOptions = {
-  origin: (requestOrigin, callback) => {
-      if (!requestOrigin || allowedCorsOrigins.includes(requestOrigin)) {
-        callback(null, true);
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // allow requests with no origin (server-to-server or curl)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
       } else {
-        callback(new Error("CORS origin rejected"));
+        return callback(new Error("CORS origin rejected"));
       }
     },
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-  };
-
-app.use(cors(corsOptions));
+  })
+);
 
 app.get("/", (_req, res) => {
   res.status(200).json({ status: "ok" });

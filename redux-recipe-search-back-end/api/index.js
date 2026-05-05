@@ -1,18 +1,20 @@
 const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
-const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
 const dotenv = require("dotenv");
-
 const env = (process.env.NODE_ENV || "production").toLowerCase();
 const isProduction = env === "production";
-const isDevelopment = env === "development";
 
-const envFile = isProduction ? ".env.production.local" : ".env.development.local";
+const envFile = isProduction ? ".env" : ".env.development.local";
 dotenv.config({ path: envFile });
 
 const app = express();
+
+if (process.env.NODE_ENV === "development") {
+  const morgan = require("morgan");
+  app.use(morgan("dev"));
+}
 app.set("trust proxy", 1);
 
 const limiter = rateLimit({
@@ -23,28 +25,13 @@ const limiter = rateLimit({
 app.use(limiter);
 
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (isProduction) {
-      const allowedOrigins = (process.env.CORS_ALLOWED_ORIGINS || "").split(",");
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    } else {
-      callback(null, true); // Dev allows all
-    }
-  },
+  origin: isProduction ? (process.env.CORS_ALLOWED_ORIGINS || "").split(",") : "*",
   methods: "GET,HEAD,POST,OPTIONS",
   allowedHeaders: "Content-Type,Authorization",
 };
+
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
-
-if (isDevelopment) {
-  app.use(morgan("dev"));
-}
-
 app.use(express.json());
 
 app.get("/", async (_req, res) => {
@@ -88,5 +75,4 @@ const server = app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT} (${env})`);
 });
 
-// Optional: increase timeout for production
 if (isProduction) server.timeout = 10000;
